@@ -10,5 +10,5 @@ This public repository contains the compiled browser build. The game source is m
 - **Space** jumps.
 - **Left click** or **J** attacks.
 - **Q** cycles sand gifts; **F** activates one.
-- **Right mouse drag** looks around; **Esc** pauses.
+- **Right mouse drag** looks around; **Z / X** rotate the view; **Esc** pauses.
 - On touchscreens, use the on-screen controls.
