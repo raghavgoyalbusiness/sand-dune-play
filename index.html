@@ -9,13 +9,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
-    <script type="module" crossorigin src="./assets/index-TgGrvDke.js"></script>
+    <script type="module" crossorigin src="./assets/index-1GVhPU6x.js"></script>
     <link rel="modulepreload" crossorigin href="./assets/three-vendor-BgSOtkoc.js">
-    <link rel="stylesheet" crossorigin href="./assets/index-CK_1lzHM.css">
+    <link rel="stylesheet" crossorigin href="./assets/index-DKSbTKkr.css">
   </head>
   <body>
-    <main id="game-shell" aria-label="SAND DUNE game">
-      <canvas id="game-canvas" aria-label="Desert game world"></canvas>
+    <main id="game-shell" aria-labelledby="game-title">
+      <canvas id="game-canvas" tabindex="0" aria-label="SAND DUNE interactive 3D desert survival game. Focus here to play with the keyboard: W A S D or arrow keys move, Shift sprints, Space jumps, J attacks, Q selects a power, F uses it, Z and X rotate the view, and Escape pauses."></canvas>
       <div class="celestial-disc" aria-hidden="true"></div>
       <div class="vignette" aria-hidden="true"></div>
       <div class="film-grain" aria-hidden="true"></div>
@@ -23,7 +23,7 @@
       <section id="title-screen" class="screen title-screen">
         <div class="title-brand">
           <p class="eyebrow">A JOURNEY THROUGH THE LAST DESERT</p>
-          <h1>SAND <span>DUNE</span></h1>
+          <h1 id="game-title">SAND <span>DUNE</span></h1>
           <div class="title-rule"><i></i><b>◈</b><i></i></div>
           <p class="title-caption">THE BLACK SUN IS RISING</p>
         </div>
@@ -34,9 +34,9 @@
         <div class="title-foot"><span>WANDER · ENDURE · REMEMBER</span><span>01 / THE LAST WELL</span></div>
       </section>
 
-      <section id="controls-panel" class="modal-panel hidden" aria-label="Controls">
-        <button class="close-button" data-close="controls-panel" aria-label="Close controls">×</button>
-        <p class="eyebrow">FIELD NOTES</p><h2>Keep moving.</h2>
+      <section id="controls-panel" class="modal-panel hidden" role="dialog" aria-modal="true" aria-labelledby="controls-title">
+        <button id="controls-close" class="close-button" data-close="controls-panel" aria-label="Close controls">×</button>
+        <p class="eyebrow">FIELD NOTES</p><h2 id="controls-title">Keep moving.</h2>
         <div class="control-list">
           <p><span>W A S D / ARROWS</span><b>Move through the dunes</b></p>
           <p><span>SHIFT</span><b>Sprint · drains stamina</b></p>
@@ -44,6 +44,7 @@
           <p><span>CLICK / J</span><b>Attack · use equipped weapon</b></p>
           <p><span>Q / F</span><b>Cycle / use sand gift</b></p>
           <p><span>RIGHT DRAG</span><b>Look around</b></p>
+          <p><span>Z / X</span><b>Rotate the view</b></p>
           <p><span>ESC</span><b>Pause the journey</b></p>
           <p class="mobile-note">On touchscreens: drag the left pad to steer. Swipe up to jump, down to dash. Use the right-side buttons to attack and call a gift. Press and hold the gift icon to cycle powers.</p>
         </div>
@@ -52,20 +53,20 @@
       <section id="hud" class="hud hidden" aria-label="Survival status">
         <div class="hud-topline"><span class="chapter-mark">I</span><span id="world-status">THE QUIET DUNES</span><span id="survival-time">00:00</span></div>
         <div class="vitals">
-          <div class="vital-row"><span>VITALITY</span><div class="meter"><i id="health-fill"></i></div><b id="health-value">100</b></div>
-          <div class="vital-row water-row"><span>WATER</span><div class="meter"><i id="water-fill"></i></div><b id="water-value">72</b></div>
-          <div class="vital-row stamina-row"><span>BREATH</span><div class="meter"><i id="stamina-fill"></i></div><b id="stamina-value">100</b></div>
+          <div class="vital-row"><span id="health-label">VITALITY</span><div id="health-meter" class="meter" role="progressbar" aria-labelledby="health-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="health-fill" aria-hidden="true"></i></div><b id="health-value">100</b></div>
+          <div class="vital-row water-row"><span id="water-label">WATER</span><div id="water-meter" class="meter" role="progressbar" aria-labelledby="water-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="72"><i id="water-fill" aria-hidden="true"></i></div><b id="water-value">72</b></div>
+          <div class="vital-row stamina-row"><span id="stamina-label">BREATH</span><div id="stamina-meter" class="meter" role="progressbar" aria-labelledby="stamina-label" aria-valuemin="0" aria-valuemax="100" aria-valuenow="100"><i id="stamina-fill" aria-hidden="true"></i></div><b id="stamina-value">100</b></div>
         </div>
-        <div id="threat-banner" class="threat-banner hidden"><span class="threat-dot"></span><span id="threat-text">SOMETHING STIRS BELOW</span></div>
+        <div id="threat-banner" class="threat-banner hidden" role="status" aria-live="polite"><span class="threat-dot" aria-hidden="true"></span><span id="threat-text">SOMETHING STIRS BELOW</span></div>
         <div class="hud-bottom-left"><span class="compass-tick">◉</span><span id="discovery-label">FOLLOW THE DUNES</span></div>
         <div class="hud-bottom-right">
           <div id="weapon-display" class="weapon-display hidden"><span class="weapon-symbol">✦</span><div><small id="weapon-name">DESERT BOW</small><b id="weapon-count">8</b></div></div>
           <button id="power-button" class="power-button" aria-label="Use active power"><span class="power-orbit"></span><span id="power-icon">◌</span><small id="power-short">F</small></button>
           <button id="pause-button" class="pause-button" aria-label="Pause">Ⅱ</button>
         </div>
-        <div id="toast" class="toast"></div>
+        <div id="toast" class="toast" role="status" aria-live="polite" aria-atomic="true"></div>
         <div id="touch-controls" class="touch-controls">
-          <div id="move-pad" class="move-pad" aria-label="Movement pad"><div id="move-knob" class="move-knob"></div></div>
+          <div id="move-pad" class="move-pad" aria-hidden="true"><div id="move-knob" class="move-knob"></div></div>
           <div class="touch-actions"><button id="touch-jump" aria-label="Jump">↑</button><button id="touch-attack" aria-label="Attack">✦</button></div>
         </div>
       </section>
@@ -81,8 +82,8 @@
         <div class="overlay-actions"><button id="journey-again-button" class="primary-button">RETURN TO THE DUNES <span>↗</span></button></div>
       </section>
 
-      <div id="error-screen" class="screen overlay-screen hidden"><p class="eyebrow">THE DESERT IS OUT OF REACH</p><h2>3D RENDERING UNAVAILABLE</h2><p class="game-over-copy">Enable WebGL in your browser, then reload this page.</p></div>
-      <div id="context-loss" class="context-loss hidden">Graphics paused — restore the tab to continue.</div>
+      <div id="error-screen" class="screen overlay-screen hidden" role="alert"><p class="eyebrow">THE DESERT IS OUT OF REACH</p><h2>3D RENDERING UNAVAILABLE</h2><p class="game-over-copy">Enable WebGL in your browser, then reload this page.</p></div>
+      <div id="context-loss" class="context-loss hidden" role="status" aria-live="polite">Graphics paused — restore the tab to continue.</div>
       <div class="corner-signature">SAND DUNE <span>·</span> THE LAST WELL</div>
     </main>
   </body>
